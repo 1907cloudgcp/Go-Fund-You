@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.datasource.initilization-mode",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.initilization-mode'"
+  },
+  {
+    "name": "spring.datasource.dirverClassName",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.datasource.dirverClassName'"
+  }
+]}

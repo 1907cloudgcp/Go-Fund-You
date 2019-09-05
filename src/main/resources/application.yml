@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: go-fund-you
+  
+  datasource:
+    dirverClassName: org.postgresql.Driver
+    initilization-mode: never
+    password: ${JDBC_PASSWORD}
+    username: ${JDBC_USERNAME}
+    url: jdbc:postgresql://${JDBC_URL}:5432/${DATABASE_NAME}
+  jpa:    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: true
+    hibernate:      ddl-auto: create
+    properties:      hibernate:
+        default_schema: ${JDBC_SCHEMA}
+    show-sql: false
