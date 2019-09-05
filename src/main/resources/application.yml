@@ -7,7 +7,7 @@ spring:
   
   datasource:
     dirverClassName: org.postgresql.Driver
-    initilization-mode: never
+    initilization-mode: create
     password: ${JDBC_PASSWORD}
     username: ${JDBC_USERNAME}
     url: jdbc:postgresql://${JDBC_URL}:5432/${DATABASE_NAME}
