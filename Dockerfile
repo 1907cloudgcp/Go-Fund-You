@@ -1,4 +1,4 @@
-FROM sgrio/java-oracle
+FROM nimmis/java-centos:openjdk-8-jdk
 
 RUN apt-get update
 RUN apt-get install -y maven
