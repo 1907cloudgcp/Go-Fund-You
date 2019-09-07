@@ -1,6 +1,5 @@
 FROM nimmis/java-centos:openjdk-8-jdk
 
-RUN yum update
 RUN yum install -y maven
 
 COPY pom.xml /usr/local/service/pom.xml
