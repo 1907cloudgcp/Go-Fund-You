@@ -8,7 +8,10 @@ ENV JDBC_URL="34.66.62.174"
 ENV JDBC_USERNAME="postgres"
 ENV JDBC_PASSWORD="poiuytre"
 
-COPY . .
+COPY pom.xml /usr/local/service/pom.xml
+COPY src /usr/local/service/src
+
+WORKDIR /usr/local/service
 
 
 RUN mvn package
