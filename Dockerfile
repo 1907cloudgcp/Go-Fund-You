@@ -1,13 +1,7 @@
 FROM nimmis/java-centos:openjdk-8-jdk
 
-ENV DATABASE_NAME="postgres"
-ENV JDBC_SCHEMA="jdbc:postgresql:"
-ENV JDBC_URL="34.66.62.174"
-ENV JDBC_USERNAME="postgres"
-ENV JDBC_PASSWORD="poiuytre"
+RUN mkdir /usr/local/src/ronnie_rocks
 
-COPY . .
-
-
+WORKDIR /usr/local/src/ronnie_rocks
 
 CMD ["java", "-jar", "./target/Go-Fund-You-0.0.1-SNAPSHOT.jar"]
