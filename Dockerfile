@@ -15,4 +15,5 @@ WORKDIR /usr/local/service
 
 
 RUN mvn package
-CMD ["java", "-cp", "/target/GO-FUND-YOU-0.0.1-SNAPSHOT", "/com.revature.GoFundYouApplication"]
+# CMD ["java", "-cp", "/target/GO-FUND-YOU-0.0.1-SNAPSHOT", "/com.revature.GoFundYouApplication"]
+CMD ["java", "-jar", "./target/Go-Fund-You-0.0.1-SNAPSHOT.jar"]
