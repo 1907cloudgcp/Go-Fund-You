@@ -8,9 +8,8 @@ ENV JDBC_URL="34.66.62.174"
 ENV JDBC_USERNAME="postgres"
 ENV JDBC_PASSWORD="poiuytre"
 
-COPY pom.xml /usr/local/service/pom.xml
-COPY src /usr/local/service/src
+COPY . .
 
-WORKDIR /usr/local/service
+
 RUN mvn package
 CMD ["java", "-cp", "/target/GO-FUND-YOU-0.0.1-SNAPSHOT", "/com.revature.GoFundYouApplication"]
