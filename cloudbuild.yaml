@@ -10,4 +10,10 @@ steps:
   - 'JDBC_PASSWORD=poiuytre'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '--tag=gcr.io/$PROJECT_ID/src', '.']
+  env:
+  - 'DATABASE_NAME=postgres'
+  - 'JDBC_SCHEMA=gofundyou'
+  - 'JDBC_URL=34.66.62.174'
+  - 'JDBC_USERNAME=postgres'
+  - 'JDBC_PASSWORD=poiuytre'
 images: ['gcr.io/$PROJECT_ID/src']
