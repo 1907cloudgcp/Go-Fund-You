@@ -12,8 +12,8 @@ spring:
     username: ${JDBC_USERNAME}
     url: jdbc:postgresql://${JDBC_URL}:5432/${DATABASE_NAME}
   jpa:    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    generate-ddl: true
-    hibernate:      ddl-auto: create
+    generate-ddl: false
+    hibernate:      ddl-auto: validate
     properties:      hibernate:
         default_schema: ${JDBC_SCHEMA}
     show-sql: false
