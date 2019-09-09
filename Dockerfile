@@ -10,4 +10,4 @@ COPY . .
 
 
 
-CMD ["java", "-jar", "/target/GO-FUND-YOU-0.0.1-SNAPSHOT", "/com.revature.GoFundYouApplication"]
+CMD ["java", "-jar", "./target/Go-Fund-You-0.0.1-SNAPSHOT.jar"]
