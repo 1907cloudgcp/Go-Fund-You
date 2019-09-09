@@ -1,7 +1,0 @@
-Testing trigger from main.
-
-And again! And again...
-...One More Time!
-
-Maybe it will work this time.
-
