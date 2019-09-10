@@ -11,7 +11,7 @@ steps:
   - 'JDBC_PASSWORD=poiuytre'
 # Build image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/go-fund-you', './devops/Dockerfile']
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/go-fund-you', '--file=./devops/Dockerfile']
 # Deploy into App Engine
 - name: "gcr.io/cloud-builders/gcloud"
   args: ['app', 'deploy', '--image-url=gcr.io/$PROJECT_ID/go-fund-you']
