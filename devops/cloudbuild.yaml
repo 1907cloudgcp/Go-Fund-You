@@ -17,5 +17,4 @@ steps:
 # Deploy into App Engine
 - name: "gcr.io/cloud-builders/gcloud"
   args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you:latest']
-images: ['gcr.io/$PROJECT_ID/go-fund-you']
 timeout: "1600s"
