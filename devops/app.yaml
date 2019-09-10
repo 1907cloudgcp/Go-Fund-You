@@ -1,0 +1,14 @@
+runtime: custom
+env: flex 
+service: go-fund-you-test-env
+resources:
+  cpu: 1
+  memory_gb: 1
+manual_scaling:
+  instances: 1
+env_variables:
+  DATABASE_NAME: "postgres"
+  JDBC_SCHEMA: "gofundyou"
+  JDBC_URL: "34.66.62.174"
+  JDBC_USERNAME: "postgres"
+  JDBC_PASSWORD: "poiuytre"

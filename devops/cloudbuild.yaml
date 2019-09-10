@@ -1,0 +1,19 @@
+steps:
+# Run tests using maven
+- name: 'maven:3.6.1-jdk-8-slim'
+  entrypoint: 'mvn'
+  args: ['install']
+  env:
+  - 'DATABASE_NAME=postgres'
+  - 'JDBC_SCHEMA=gofundyou'
+  - 'JDBC_URL=34.66.62.174'
+  - 'JDBC_USERNAME=postgres'
+  - 'JDBC_PASSWORD=poiuytre'
+# Build image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '--tag=gcr.io/$PROJECT_ID/go-fund-you', '.']
+# Deploy into App Engine
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ['app', 'deploy', '--image-url=gcr.io/$PROJECT_ID/go-fund-you']
+images: ['gcr.io/$PROJECT_ID/go-fund-you']
+timeout: "1600s"
