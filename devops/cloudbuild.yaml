@@ -9,11 +9,13 @@ steps:
   - 'JDBC_URL=34.66.62.174'
   - 'JDBC_USERNAME=postgres'
   - 'JDBC_PASSWORD=poiuytre'
-# Build image
+# Build and push image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '--tag=gcr.io/$PROJECT_ID/go-fund-you', '--file=./devops/Dockerfile', '.']
+  args: ['build', '-t', 'gcr.io/$PROJECT_ID/go-fund-you:latest', '-f', './devops/Dockerfile', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/go-fund-you:latest']
 # Deploy into App Engine
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you']
+  args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you:latest']
 images: ['gcr.io/$PROJECT_ID/go-fund-you']
 timeout: "1600s"
