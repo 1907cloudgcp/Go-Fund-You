@@ -19,7 +19,7 @@ steps:
 - name: "gcr.io/cloud-builders/gcloud"
   args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you:latest']
 secrets:
-- kmsKeyName: 'projects/$PROJECT_ID/locations/global/keyRings/gfy-keyring/cryptoKeys/gofundyoukey'
+- kmsKeyName: 'projects/project-2-251819/locations/global/keyRings/gfy-keyring/cryptoKeys/gofundyoukey'
   secretEnv:
     DATABASE_NAME: 'CiQAvaiAQtZf0MI9nLcCM+PBtusdndmAjfFSYKacNQMi/lamKpsSMQCOIWGr3HQnhhhR6Tug/+Hm3BIFYieDgno86kAXOw73uC51Pm6/fCqntvzbHzjy6wU=' 
     JDBC_SCHEMA: 'CiQAvaiAQiTB/cudn0Gwc6lnng0R+fkp2G5ZZ6/RfEOwQzeyTwQSMgCOIWGr4jJ+U6Cm9gvkgx8A1wGAoyqocy9HdYo37SQhGWWrmZ1JNd9ZWWQ5aq/01Sio'
