@@ -39,6 +39,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'gcr-credentials-file', variable: 'GC_KEY')]) {
                         sh('gcloud auth activate-service-account --key-file=${GC_KEY}')
                         echo 'Deploying to Kubernetes'
+                        sh('gcloud components install kubectl')
                         sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
                     }
                 }
