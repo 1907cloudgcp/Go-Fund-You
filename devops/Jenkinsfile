@@ -50,4 +50,9 @@ pipeline {
             }
         }
     }
+    post {
+        failure {
+            mail to: ryanlingkuan@gmail.com, subject: 'The Pipeline failed :('
+        }
+    }
 }
