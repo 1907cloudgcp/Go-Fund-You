@@ -1,5 +1,5 @@
 pipeline {
-    agent none
+    agent any
     environment {
             PROJECT_ID = 'project-2-251819'
             DATABASE_NAME = credentials('database-name')
@@ -10,11 +10,6 @@ pipeline {
         }
     stages {
         stage('Maven Build') {
-            agent {
-                docker {
-                    image 'maven:3.6.1-jdk-8-slim'
-                }
-            }
             steps {
                 echo 'Maven Build'
                 sh 'mvn install'
@@ -32,8 +27,10 @@ pipeline {
         stage('Push Image') {
             steps {
                 echo 'Docker Push Image'
-                docker.withRegistry('https://gcr.io', 'gcr:${PROJECT_ID}') {
-                    newImage.push('productionlatest')
+                script {
+                    docker.withRegistry('https://gcr.io', 'gcr:${PROJECT_ID}') {
+                        newImage.push('productionlatest')
+                    }
                 }
                 /*
                 sh 'docker push gcr.io/${PROJECT_ID}/go-fund-you:productionlatest'
