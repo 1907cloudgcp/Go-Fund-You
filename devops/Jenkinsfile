@@ -1,7 +1,6 @@
 pipeline {
-    
-    stages {
-        environment {
+    agent none
+    environment {
             PROJECT_ID = 'project-2-251819'
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
@@ -9,10 +8,11 @@ pipeline {
             JDBC_USERNAME = credentials('jdbc-username')
             JDBC_PASSWORD = credentials('jdbc-password')
         }
+    stages {
         stage('Maven Build') {
             agent {
                 docker {
-                    image = 'maven:3.6.1-jdk-8-slim'
+                    image 'maven:3.6.1-jdk-8-slim'
                 }
             }
             steps {
@@ -23,7 +23,7 @@ pipeline {
         stage('Build Image') {
             agent {
                 docker {
-                    image = 'docker:19.03.2'
+                    image 'docker:19.03.2'
                 }
             }
             steps {
