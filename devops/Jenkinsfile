@@ -20,12 +20,17 @@ pipeline {
             steps {
                 echo 'Docker Build Image'
                 script {
+                    /*
                     withCredentials([file(credentialsId: 'gcr-credentials-file', variable: 'GC_KEY')]) {
                         sh('gcloud auth activate-service-account --key-file=${GC_KEY}')
                     }
-                    def newImage = docker.build('gcr.io/${PROJECT_ID}/go-fund-you:productionlatest -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD}')
-                    echo 'Docker Push Image'
-                    newImage.push('productionlatest')
+                    */
+                    docker.withRegistry('https://gcr.io/${PROJECT_ID}/', 'gcr-credentials-file') {
+                        def newImage = docker.build('gcr.io/${PROJECT_ID}/go-fund-you:productionlatest -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD}')
+                        echo 'Docker Push Image'
+                        newImage.push()
+                    }
+                    
                 }
             }
         }
