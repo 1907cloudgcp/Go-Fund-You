@@ -26,27 +26,13 @@ pipeline {
                         echo 'Docker Push Image'
                         sh('gcloud docker -- push gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
                     }
-                    /*
-                    docker.withRegistry('https://gcr.io/${PROJECT_ID}/', '${GC_KEY}') {
-                        def newImage = docker.build('gcr.io/${PROJECT_ID}/go-fund-you:productionlatest -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD}')
-                        echo 'Docker Push Image'
-                        newImage.push()
-                    }
-                    */
-                    
                 }
             }
         }
         stage('Deploy') {
-            /*
-            agent { 
-                kubernetes {
-
-                }
-            }
-            */
             steps {
                 echo 'Deploying to Kubernetes'
+                sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
             }
         }
     }
