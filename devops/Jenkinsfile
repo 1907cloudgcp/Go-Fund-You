@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
             PROJECT_ID = 'project-2-251819'
+            GC_KEY = credenetials('1907-project-2')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
             JDBC_URL = credentials('jdbc-url')
@@ -19,11 +20,12 @@ pipeline {
             steps {
                 echo 'Docker Build Image'
                 script {
+                    withCredentials([file(credentialsId: 'key-sa', variable: 'GC_KEY')]) {
+                        sh("gcloud auth activate-service-account --key-file=${GC_KEY}")
+                    }
                     def newImage = docker.build('gcr.io/${PROJECT_ID}/go-fund-you -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD}')
                     echo 'Docker Push Image'
-                    docker.withRegistry('https://gcr.io', 'gcr:${PROJECT_ID}') {
-                        newImage.push('productionlatest')
-                    }
+                    newImage.push('productionlatest')
                 }
             }
         }
