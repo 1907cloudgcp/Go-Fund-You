@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
             PROJECT_ID = 'project-2-251819'
-            GC_KEY = credentials('1907-project-2')
+            GC_KEY = credentials('gcr-credentials-file')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
             JDBC_URL = credentials('jdbc-url')
