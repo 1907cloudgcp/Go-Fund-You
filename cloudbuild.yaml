@@ -1,0 +1,31 @@
+steps:
+# Run tests using maven
+- name: 'maven:3.6.1-jdk-8-slim'
+  entrypoint: 'mvn'
+  args: ['install']
+  secretEnv:
+  - 'DATABASE_NAME'
+  - 'JDBC_SCHEMA'
+  - 'JDBC_URL'
+  - 'JDBC_USERNAME'
+  - 'JDBC_PASSWORD'
+# Build image
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker build -t gcr.io/$PROJECT_ID/go-fund-you:testlatest -f ./devops/Dockerfile --build-arg DATABASE_NAME=$$DATABASE_NAME --build-arg JDBC_SCHEMA=$$JDBC_SCHEMA --build-arg JDBC_URL=$$JDBC_URL --build-arg JDBC_USERNAME=$$JDBC_USERNAME --build-arg JDBC_PASSWORD=$$JDBC_PASSWORD .']
+  secretEnv: ['DATABASE_NAME', 'JDBC_SCHEMA', 'JDBC_URL', 'JDBC_USERNAME', 'JDBC_PASSWORD']
+# Push image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/go-fund-you:testlatest']
+# Deploy into App Engine
+- name: "gcr.io/cloud-builders/gcloud"
+  args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you:testlatest']
+secrets:
+- kmsKeyName: 'projects/project-2-251819/locations/global/keyRings/gfy-keyring/cryptoKeys/gofundyoukey'
+  secretEnv:
+    DATABASE_NAME: 'CiQAvaiAQtZf0MI9nLcCM+PBtusdndmAjfFSYKacNQMi/lamKpsSMQCOIWGr3HQnhhhR6Tug/+Hm3BIFYieDgno86kAXOw73uC51Pm6/fCqntvzbHzjy6wU=' 
+    JDBC_SCHEMA: 'CiQAvaiAQiTB/cudn0Gwc6lnng0R+fkp2G5ZZ6/RfEOwQzeyTwQSMgCOIWGr4jJ+U6Cm9gvkgx8A1wGAoyqocy9HdYo37SQhGWWrmZ1JNd9ZWWQ5aq/01Sio'
+    JDBC_URL: 'CiQAvaiAQoUh+0s5tiJxm8uzFY/mAm+Ec33PwXsuoef1x7wjyOQSNQCOIWGrnPtSEy3TjbdJPDS/RwawvrafbL/AjcrFQFm/t6HZ0zCeq5Og+CGn5keYQcLGktsY' 
+    JDBC_USERNAME: 'CiQAvaiAQqRK/nk9hldtk0RTnxaXQxXFDPsuom0XcDn+HTb5iGsSMQCOIWGr+yIemI9uBTJXsV1PyyII5a2TypQh7mlGKIwM+DeWe+FN2XnbE7AcM8mylSo='
+    JDBC_PASSWORD: 'CiQAvaiAQlb2MY5NWWzdTwB8dfpXRY2DmV4irqAaES8OlJoFrrQSMQCOIWGrvHszSMuupZkRjOkaPte1l1YkBZFxy7Ub1CSs+xnPLqh/ARHSUntmS9qeiwk='
+timeout: "1600s"
