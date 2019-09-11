@@ -12,14 +12,14 @@ steps:
 # Build image
 - name: 'gcr.io/cloud-builders/docker'
   entrypoint: 'bash'
-  args: ['-c', 'docker build -t gcr.io/$PROJECT_ID/go-fund-you:latest -f ./devops/Dockerfile --build-arg DATABASE_NAME=$$DATABASE_NAME --build-arg JDBC_SCHEMA=$$JDBC_SCHEMA --build-arg JDBC_URL=$$JDBC_URL --build-arg JDBC_USERNAME=$$JDBC_USERNAME --build-arg JDBC_PASSWORD=$$JDBC_PASSWORD .']
+  args: ['-c', 'docker build -t gcr.io/$PROJECT_ID/go-fund-you:testlatest -f ./devops/Dockerfile --build-arg DATABASE_NAME=$$DATABASE_NAME --build-arg JDBC_SCHEMA=$$JDBC_SCHEMA --build-arg JDBC_URL=$$JDBC_URL --build-arg JDBC_USERNAME=$$JDBC_USERNAME --build-arg JDBC_PASSWORD=$$JDBC_PASSWORD .']
   secretEnv: ['DATABASE_NAME', 'JDBC_SCHEMA', 'JDBC_URL', 'JDBC_USERNAME', 'JDBC_PASSWORD']
 # Push image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/$PROJECT_ID/go-fund-you:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/go-fund-you:testlatest']
 # Deploy into App Engine
 - name: "gcr.io/cloud-builders/gcloud"
-  args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you:latest']
+  args: ['app', 'deploy', './devops/app.yaml', '--image-url=gcr.io/$PROJECT_ID/go-fund-you:testlatest']
 secrets:
 - kmsKeyName: 'projects/project-2-251819/locations/global/keyRings/gfy-keyring/cryptoKeys/gofundyoukey'
   secretEnv:
