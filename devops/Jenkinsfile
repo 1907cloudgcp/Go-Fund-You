@@ -23,7 +23,7 @@ pipeline {
         stage('Build Image') {
             agent {
                 docker {
-                    image 'docker:19.03.2'
+                    image 'docker'
                 }
             }
             steps {
