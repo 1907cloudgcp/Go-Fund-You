@@ -18,14 +18,13 @@ pipeline {
         stage('Build Image') {
             steps {
                 echo 'Docker Build Image'
-                def newImage = docker.build('gcr.io/${PROJECT_ID}/go-fund-you -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD} .')
-                echo 'Docker Push Image'
-                docker.withRegistry('https://gcr.io', 'gcr:${PROJECT_ID}') {
+                script {
+                    def newImage = docker.build('gcr.io/${PROJECT_ID}/go-fund-you -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD} .')
+                    echo 'Docker Push Image'
+                    docker.withRegistry('https://gcr.io', 'gcr:${PROJECT_ID}') {
                         newImage.push('productionlatest')
+                    }
                 }
-                // sh 'docker build -t gcr.io/${PROJECT_ID}/go-fund-you:productionlatest -f ./devops/Dockerfile --build-arg DATABASE_NAME=${DATABASE_NAME} --build-arg JDBC_SCHEMA=${JDBC_SCHEMA} --build-arg JDBC_URL=${JDBC_URL} --build-arg JDBC_USERNAME=${JDBC_USERNAME} --build-arg JDBC_PASSWORD=${JDBC_PASSWORD} .'
-                
-
             }
         }
         stage('Deploy') {
