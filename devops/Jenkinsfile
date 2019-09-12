@@ -55,7 +55,7 @@ pipeline {
                                        clusterName:env.CLUSTER_NAME,
                                        location:env.LOCATION,
                                        manifestPattern:'manifest.yaml',
-                                       credentialsId:env.GKE_KEY
+                                       credentialsId:env.GKE_KEY,
                                        verifyDeployments:true)
             }
         }
