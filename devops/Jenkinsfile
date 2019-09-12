@@ -51,13 +51,11 @@ pipeline {
                     }
                 }
                 */
-                sh('cp $GKE_KEY ./')
-                sh('ls -a')
                 kubernetesEngineDeploy(projectId:env.PROJECT_ID,
                                        clusterName:env.CLUSTER_NAME,
                                        location:env.LOCATION,
                                        manifestPattern:'manifest.yaml',
-                                       credentialsId:readFile('./jenkins-gke-key.json'),
+                                       credentialsId:env.GKE_KEY,
                                        verifyDeployments:true)
             }
         }
