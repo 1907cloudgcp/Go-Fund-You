@@ -30,18 +30,17 @@ pipeline {
                 }
             }
         }
-        /*
         stage('Deploy') {
             steps {
                 withCredentials([file(credentialsId: 'gke-credentials', variable: 'GKE_KEY')]) {
                     sh('gcloud auth activate-service-account --key-file=${GKE_KEY}')
                     echo 'Deploying to Kubernetes'
                     sh('gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${ZONE}')
-                    sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
+                    sh('kubectl delete pods -l app=gfy-deployment')
+                    // sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
                 }
             }
         }
-        */
         stage('Clean Workspace') {
             steps {
                 cleanWs()
