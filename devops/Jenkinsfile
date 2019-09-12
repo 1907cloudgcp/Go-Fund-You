@@ -3,6 +3,7 @@ pipeline {
     environment {
             PROJECT_ID = 'project-2-251819'
             CREDENTIALS_ID = credentials('credentialsId')
+            CERTIFICATE = credentials('cacertificate')
             SERVER_URL = credentials('serverUrl')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
@@ -42,7 +43,12 @@ pipeline {
                 withCredentials([file(credentialsId: 'gcr-credentials-file', variable: 'GC_KEY')]) {
                     sh('gcloud auth activate-service-account --key-file=${GC_KEY}')
                     echo 'Deploying to Kubernetes'
-                    withKubeConfig([credentialsId: 'credentialsId', serverUrl: '34.66.114.30']) {
+                    withKubeConfig([credentialsId: 'credentialsId',
+                                    contextName: 'gke_project-2-251819_us-central1-a_jenkins-cd',
+                                    serverUrl: '34.66.114.30',
+                                    clusterName: 'jenkins-cd',
+                                    namespace: 'default',
+                                    caCertificate: '${CERTIFICATE}]) {
                         sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
                     }
                 }
