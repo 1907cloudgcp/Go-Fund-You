@@ -48,7 +48,7 @@ pipeline {
                     }
                 }
                 */
-                kubernetesEngineDeploy(projectID:env.PROJECT_ID,
+                kubernetesEngineDeploy(projectId:env.PROJECT_ID,
                                        clusterName:env.CLUSTER_NAME,
                                        location:env.LOCATION,
                                        manifestPattern:'manifest.yaml',
