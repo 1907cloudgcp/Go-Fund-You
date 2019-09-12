@@ -56,7 +56,7 @@ pipeline {
                                        clusterName:env.CLUSTER_NAME,
                                        location:env.LOCATION,
                                        manifestPattern:'manifest.yaml',
-                                       credentialsId:'./jenkins-gke-key.json',
+                                       credentialsId:readFile('./jenkins-gke-key.json'),
                                        verifyDeployments:true)
             }
         }
