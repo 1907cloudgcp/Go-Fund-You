@@ -4,7 +4,6 @@ pipeline {
             PROJECT_ID = 'project-2-251819'
             CLUSTER_NAME = 'jenkins-cd'
             LOCATION = 'us-central1-a'
-            CREDENTIALS_ID = credentials('gke-credentials')
             GC_KEY = credentials('gcr-credentials-file')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
@@ -51,7 +50,7 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: 'gke-credentials', variable: 'CREDENTIALS_ID')]) {
                     step([
-                    $class: 'KubernetesEngineBuilder',
+                    $class: 'kubernetesEngineDeploy',
                     projectId: env.PROJECT_ID,
                     clusterName: env.CLUSTER_NAME,
                     location: env.LOCATION,
