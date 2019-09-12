@@ -4,7 +4,7 @@ pipeline {
             PROJECT_ID = 'project-2-251819'
             CLUSTER_NAME = 'jenkins-cd'
             LOCATION = 'us-central1-a'
-            CREDENTIALS_ID = credentials('project-2-251819')
+            CREDENTIALS_ID = credentials('gke-credentials')
             GC_KEY = credentials('gcr-credentials-file')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
