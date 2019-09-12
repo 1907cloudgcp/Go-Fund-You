@@ -48,14 +48,18 @@ pipeline {
                     }
                 }
                 */
-                step([
-                $class: 'KubernetesEngineBuilder',
-                projectId: env.PROJECT_ID,
-                clusterName: env.CLUSTER_NAME,
-                location: env.LOCATION,
-                manifestPattern: 'manifest.yaml',
-                credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
+                script {
+                    withCredentials([file(credentialsId: 'gke-credentials', variable: 'CREDENTIALS_ID')]) {
+                    step([
+                    $class: 'KubernetesEngineBuilder',
+                    projectId: env.PROJECT_ID,
+                    clusterName: env.CLUSTER_NAME,
+                    location: env.LOCATION,
+                    manifestPattern: 'manifest.yaml',
+                    credentialsId: env.CREDENTIALS_ID,
+                    verifyDeployments: true])
+                    }
+                }
             }
         }
     }
