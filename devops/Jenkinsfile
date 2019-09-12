@@ -5,7 +5,6 @@ pipeline {
             CLUSTER_NAME = 'jenkins-cd'
             LOCATION = 'us-central1-a'
             GC_KEY = credentials('gcr-credentials-file')
-            GKE_KEY = credentials('gke-credentials')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
             JDBC_URL = credentials('jdbc-url')
@@ -33,6 +32,9 @@ pipeline {
             }
         }
         stage('Deploy') {
+            environment {
+                GKE_KEY = credentials('gke-credentials')
+            }
             steps {
                 /*
                 echo 'Deploying to Kubernetes'
@@ -52,7 +54,7 @@ pipeline {
                                        clusterName:env.CLUSTER_NAME,
                                        location:env.LOCATION,
                                        manifestPattern:'manifest.yaml',
-                                       credentialsId:$GKE_KEY,
+                                       credentialsId:env.GKE_KEY,
                                        verifyDeployments:true)
             }
         }
