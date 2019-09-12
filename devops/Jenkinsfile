@@ -51,7 +51,9 @@ pipeline {
                     }
                 }
                 */
-                sh('cp $GKE_KEY ./')
+                sh('ls -a')
+                sh('sudo cp $GKE_KEY ./')
+                sh('ls -a')
                 kubernetesEngineDeploy(projectId:env.PROJECT_ID,
                                        clusterName:env.CLUSTER_NAME,
                                        location:env.LOCATION,
