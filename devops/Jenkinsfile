@@ -49,7 +49,7 @@ pipeline {
                 }
                 */
                 script {
-                    withCredentials([file(credentialsId: 'gke-credentials', variable: 'GKE_KEY')]) {
+                    withCredentials([file(credentialsId: 'project-2-251819', variable: 'GKE_KEY')]) {
                         kubernetesEngineDeploy(projectId:env.PROJECT_ID,
                                                clusterName:env.CLUSTER_NAME,
                                                location:env.LOCATION,
