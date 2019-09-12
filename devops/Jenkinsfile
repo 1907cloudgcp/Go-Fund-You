@@ -2,7 +2,8 @@ pipeline {
     agent any
     environment {
             PROJECT_ID = 'project-2-251819'
-            GC_KEY = credentials('gcr-credentials-file')
+            CLUSTER_NAME = 'jenkins-cd'
+            ZONE = 'us-central1-a'
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
             JDBC_URL = credentials('jdbc-url')
@@ -31,13 +32,18 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script {
-                    withCredentials([file(credentialsId: 'gcr-credentials-file', variable: 'GC_KEY')]) {
-                        sh('gcloud auth activate-service-account --key-file=${GC_KEY}')
-                        echo 'Deploying to Kubernetes'
-                        sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
-                    }
+                withCredentials([file(credentialsId: 'gke-credentials', variable: 'GKE_KEY')]) {
+                    sh('gcloud auth activate-service-account --key-file=${GKE_KEY}')
+                    echo 'Deploying to Kubernetes'
+                    sh('gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${ZONE}')
+                    sh('kubectl delete pods -l app=gfy-deployment')
+                    // sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
                 }
+            }
+        }
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
             }
         }
     }
