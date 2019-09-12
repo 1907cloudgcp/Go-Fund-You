@@ -35,34 +35,12 @@ pipeline {
                 GKE_KEY = credentials('gke-credentials')
             }
             steps {
-                /*
-                echo 'Deploying to Kubernetes'
-                sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
-                */
                 withCredentials([file(credentialsId: 'gke-credentials', variable: 'GKE_KEY')]) {
                     sh('gcloud auth activate-service-account --key-file=${GKE_KEY}')
                     echo 'Deploying to Kubernetes'
                     sh('gcloud container clusters get-credentials ${CLUSTER_NAME} --zone ${ZONE}')
                     sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
-                    /*withKubeConfig([credentialsId: 'credentialsId',
-                                    contextName: 'gke_project-2-251819_us-central1-a_jenkins-cd',
-                                    serverUrl: '34.66.114.30',
-                                    clusterName: 'jenkins-cd',
-                                    namespace: 'default',
-                                    caCertificate: '${CERTIFICATE}']) {
-                        sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
-                    }*/
                 }
-                /*
-                withCredentials([[$class: 'FileBinding', credentialsId: "gke-credentials", variable: 'GKE_KEY']]) {
-                    kubernetesEngineDeploy(projectId:env.PROJECT_ID,
-                                           clusterName:env.CLUSTER_NAME,
-                                           location:env.LOCATION,
-                                           manifestPattern:'manifest.yaml',
-                                           credentialsId:'$GKE_KEY',
-                                           verifyDeployments:true)
-                }
-                */
             }
         }
     }
