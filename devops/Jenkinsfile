@@ -51,12 +51,14 @@ pipeline {
                     }
                 }
                 */
-                kubernetesEngineDeploy(projectId:env.PROJECT_ID,
-                                       clusterName:env.CLUSTER_NAME,
-                                       location:env.LOCATION,
-                                       manifestPattern:'manifest.yaml',
-                                       credentialsId:env.GKE_KEY,
-                                       verifyDeployments:true)
+                withCredentials([[$class: 'FileBinding', credentialsId: "gke-credentials", variable: 'GKE_KEY']]) {
+                    kubernetesEngineDeploy(projectId:env.PROJECT_ID,
+                                           clusterName:env.CLUSTER_NAME,
+                                           location:env.LOCATION,
+                                           manifestPattern:'manifest.yaml',
+                                           credentialsId:'$GKE_KEY',
+                                           verifyDeployments:true)
+                }
             }
         }
     }
