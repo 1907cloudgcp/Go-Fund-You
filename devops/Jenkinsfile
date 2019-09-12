@@ -48,14 +48,12 @@ pipeline {
                     }
                 }
                 */
-                ws {
-                    kubernetesEngineDeploy(projectId:env.PROJECT_ID,
-                                           clusterName:env.CLUSTER_NAME,
-                                           location:env.LOCATION,
-                                           manifestPattern:'manifest.yaml',
-                                           credentialsId:env.GKE_KEY,
-                                           verifyDeployments:true)
-                }
+                kubernetesEngineDeploy(projectId:env.PROJECT_ID,
+                                       clusterName:env.CLUSTER_NAME,
+                                       location:env.LOCATION,
+                                       manifestPattern:'manifest.yaml',
+                                       credentialsId:env.GKE_KEY,
+                                       verifyDeployments:true)
             }
         }
     }
