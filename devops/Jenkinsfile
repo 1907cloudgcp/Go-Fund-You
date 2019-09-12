@@ -1,11 +1,8 @@
 pipeline {
     agent any
     environment {
-            PROJECT_ID = 'project-2-251819'
-            CLUSTER_NAME = 'jenkins-cd'
-            LOCATION = 'us-central1-a'
-            GC_KEY = credentials('gcr-credentials-file')
-            // GKE_KEY = credentials('project-2-251819')
+            CREDENTIALS_ID = credentials('credentialsId')
+            SERVER_URL = credentials('serverUrl')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
             JDBC_URL = credentials('jdbc-url')
@@ -44,7 +41,9 @@ pipeline {
                 withCredentials([file(credentialsId: 'gcr-credentials-file', variable: 'GC_KEY')]) {
                     sh('gcloud auth activate-service-account --key-file=${GC_KEY}')
                     echo 'Deploying to Kubernetes'
-                    sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
+                    withKubeConfig([credentialsId: '$CREDENTIALS_ID', serverUrl: '$SERVER_URL']) {
+                        sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
+                    }
                 }
                 /*
                 withCredentials([[$class: 'FileBinding', credentialsId: "gke-credentials", variable: 'GKE_KEY']]) {
