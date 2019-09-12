@@ -1,6 +1,7 @@
 pipeline {
     agent any
     environment {
+            PROJECT_ID = 'project-2-251819'
             CREDENTIALS_ID = credentials('credentialsId')
             SERVER_URL = credentials('serverUrl')
             DATABASE_NAME = credentials('database-name')
