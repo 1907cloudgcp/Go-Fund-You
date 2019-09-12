@@ -48,14 +48,15 @@ pipeline {
                     }
                 }
                 */
-                step([
-                $class: 'kubernetesEngineDeploy',
+                kubernetesEngineDeploy
+                /*
                 projectId: env.PROJECT_ID,
                 clusterName: env.CLUSTER_NAME,
                 location: env.LOCATION,
                 manifestPattern: 'manifest.yaml',
                 credentialsId: env.CREDENTIALS_ID,
-                verifyDeployments: true])
+                verifyDeployments: true
+                */
             }
         }
     }
