@@ -5,6 +5,7 @@ pipeline {
             CLUSTER_NAME = 'jenkins-cd'
             LOCATION = 'us-central1-a'
             GC_KEY = credentials('gcr-credentials-file')
+            CREDENTIALS_ID = credentials('gke-credentials')
             DATABASE_NAME = credentials('database-name')
             JDBC_SCHEMA = credentials('jdbc-schema')
             JDBC_URL = credentials('jdbc-url')
@@ -53,7 +54,7 @@ pipeline {
                 clusterName: env.CLUSTER_NAME,
                 location: env.LOCATION,
                 manifestPattern: 'manifest.yaml',
-                credentialsId: ${CREDENTIALS_ID},
+                credentialsId: env.CREDENTIALS_ID,
                 verifyDeployments: true])
             }
         }
