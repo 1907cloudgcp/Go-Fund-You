@@ -48,7 +48,7 @@ pipeline {
                                     serverUrl: '34.66.114.30',
                                     clusterName: 'jenkins-cd',
                                     namespace: 'default',
-                                    caCertificate: '${CERTIFICATE}]) {
+                                    caCertificate: '${CERTIFICATE}']) {
                         sh('kubectl set image deployments/gfy-deployment go-fund-you=gcr.io/${PROJECT_ID}/go-fund-you:productionlatest')
                     }
                 }
